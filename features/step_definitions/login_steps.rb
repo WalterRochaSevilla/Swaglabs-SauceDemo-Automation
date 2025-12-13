@@ -33,3 +33,7 @@ end
 Then('I should be returned to the Login Page') do
   login_page.verify_on_login_page
 end
+
+Then('I should see {string} product images') do |state|
+  login_page.verify_product_images_state(state)
+end

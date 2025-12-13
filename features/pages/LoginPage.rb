@@ -40,4 +40,17 @@ class LoginPage < Form
     expect(page).to have_selector('#login-button')
     expect(page).not_to have_css('.shopping_cart_link')
   end
+
+  def verify_product_images_state(state)
+    first_image = find('.inventory_item_img img', match: :first)
+    src_attribute = first_image[:src]
+
+    if state == "broken"
+      expect(src_attribute).to include("sl-404")
+    elsif state == "correct"
+      expect(src_attribute).not_to include("sl-404")
+      expect(src_attribute).to end_with(".jpg")
+    end
+  end
+
 end

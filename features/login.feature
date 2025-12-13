@@ -10,14 +10,15 @@ Feature: Module A - User Authentication
   Scenario Outline: Successful login with multiple user profiles
     When I attempt to login with user "<username>" and password "secret_sauce"
     Then I should be redirected to the Inventory Page
+    And I should see "<image_state>" product images
 
     Examples:
-      | username                | description                   |
-      | standard_user           | Standard User (Happy Path)    |
-      | problem_user            | User with broken images       |
-      | performance_glitch_user | User with performance delays  |
-      | error_user              | User with JS errors           |
-      | visual_user             | User with visual glitches     |
+      | username                | image_state | description                   |
+      | standard_user           | correct     | Standard User (Happy Path)    |
+      | problem_user            | broken      | User with broken images       |
+      | performance_glitch_user | correct     | User with performance delays  |
+      | error_user              | correct     | User with JS errors           |
+      | visual_user             | broken      | User with visual glitches     |
 
   @smoke @login @negative
   Scenario: Security lock validation for restricted user
