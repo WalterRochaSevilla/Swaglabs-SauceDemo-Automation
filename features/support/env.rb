@@ -12,7 +12,6 @@ require 'selenium-webdriver'
 Capybara.register_driver :chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new
   options.add_argument('--start-maximized')
-  options.add_argument('--start-maximized')
   options.add_argument('--incognito')
   options.add_argument('--disable-notifications')
   options.add_argument('--disable-popup-blocking')
@@ -29,7 +28,7 @@ end
 Capybara.configure do |config|
   config.default_driver = :chrome
   config.app_host = "https://www.saucedemo.com"
-  config.default_max_wait_time = 30
+  config.default_max_wait_time = 10
   config.run_server = false
 end
 

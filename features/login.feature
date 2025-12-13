@@ -19,7 +19,18 @@ Feature: Module A - User Authentication
       | error_user              | User with JS errors           |
       | visual_user             | User with visual glitches     |
 
-  @login @negative @security
+  @smoke @login @negative
   Scenario: Security lock validation for restricted user
     When I attempt to login with user "locked_out_user" and password "secret_sauce"
     Then I should see a locked out error message
+
+  @smoke @login @validation
+  Scenario: Login validation for empty credentials
+    When I click login without entering credentials
+    Then I should see a required field error
+
+  @smoke @logout @quit
+  Scenario: User can logout successfully
+    Given I attempt to login with user "standard_user" and password "secret_sauce"
+    When I log out from the application
+    Then I should be returned to the Login Page
