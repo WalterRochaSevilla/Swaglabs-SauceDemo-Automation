@@ -4,7 +4,7 @@ Este proyecto consiste en una suite de pruebas automatizadas **End-to-End (E2E)*
 
 El framework ha sido desarrollado utilizando **Ruby** y **Cucumber**, implementando estrictamente el patrón de diseño **Page Object Model (POM)** para asegurar la escalabilidad, el mantenimiento y la desacoplación de la lógica de prueba.
 
-## 🛠️ Stack Tecnológico
+## Stack Tecnológico
 
 | Componente | Tecnología | Versión |
 | :--- | :--- | :--- |
@@ -15,7 +15,7 @@ El framework ha sido desarrollado utilizando **Ruby** y **Cucumber**, implementa
 | **Aserciones** | RSpec | Latest |
 | **Navegador** | Google Chrome | V. 143+ |
 
-## 🏗️ Arquitectura del Proyecto (Page Object Model)
+## Arquitectura del Proyecto (Page Object Model)
 
 La solución se estructura mediante una jerarquía de clases donde `Form` actúa como la clase base que provee las capacidades de Capybara y utilidades comunes a todas las páginas específicas.
 
@@ -58,24 +58,24 @@ classDiagram
 * **InventoryPage:** Maneja la lógica compleja del catálogo, mapeo de selectores dinámicos de productos y validación de badges.
 * **CheckoutPage:** Gestiona el flujo transaccional y contiene la lógica crítica de validación financiera (Cálculo de impuestos y totales).
 
-## 📋 Cobertura de Pruebas
+## Cobertura de Pruebas
 
 El alcance del proyecto cubre los flujos críticos del negocio (Smoke & Regression):
 
-1.  **🔐 Autenticación (Módulo A)**
+1.  ** Autenticación (Módulo A)**
     * Happy Path con usuario estándar.
     * Validación de reglas de negocio para usuarios bloqueados (`locked_out_user`).
     * Verificación de integridad visual (imágenes rotas) para perfiles de error.
-2.  **📦 Gestión de Inventario (Módulo B)**
+2.  ** Gestión de Inventario (Módulo B)**
     * Adición y remoción dinámica de productos.
     * Persistencia de estado en botones (Add/Remove).
     * Verificación del contador del carrito en tiempo real.
-3.  **💳 Checkout y Finanzas (Módulo C)**
+3.  ** Checkout y Finanzas (Módulo C)**
     * Flujo completo de compra (End-to-End).
     * Validación de campos requeridos (Scenario Outline).
     * Validación Matemática: Verificación de que `Subtotal + Tax = Total` coincida con la UI al centavo.
 
-## 🚀 Guía de Instalación y Ejecución
+## Guía de Instalación y Ejecución
 
 ### Prerrequisitos
 * Ruby 3.0+ instalado.
@@ -114,7 +114,7 @@ Para obtener un reporte HTML visual:
 cucumber features/ -f html -o reports/reportExecution.html
 ```
 
-## 📂 Estructura de Carpetas
+## Estructura de Carpetas
 
 ```text
 SauceDemo-Automation/
@@ -129,4 +129,4 @@ SauceDemo-Automation/
 ```
 
 ---
-**Autor:** QA Automation Team - Proyecto Final.
+**Autor:** Marlon, Walter y Fer - Proyecto Final.
