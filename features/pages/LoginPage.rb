@@ -1,19 +1,23 @@
 require_relative 'Form'
 
 class LoginPage < Form
-  
+  USERNAME_FIELD = '[data-test="username"]'
+  PASSWORD_FIELD = '[data-test="password"]'
+  LOGIN_BUTTON = '[data-test="login-button"]'
+
   def visit_page
-    visit '/'
+    visit('/')
+    expect(page).to have_selector(USERNAME_FIELD, wait: 10)
   end
 
   def login_as(username, password)
-    fill_in 'user-name', with: username
-    fill_in 'password', with: password
-    click_button 'login-button'
+    find(USERNAME_FIELD).set(username)
+    find(PASSWORD_FIELD).set(password)
+    find(LOGIN_BUTTON).click
   end
 
   def click_login_button
-    click_button 'login-button'
+    find(LOGIN_BUTTON).click
   end
 
   def logout_user
@@ -37,7 +41,7 @@ class LoginPage < Form
   end
 
   def verify_on_login_page
-    expect(page).to have_selector('#login-button')
+    expect(page).to have_selector(LOGIN_BUTTON)
     expect(page).not_to have_css('.shopping_cart_link')
   end
 

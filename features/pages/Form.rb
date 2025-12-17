@@ -29,7 +29,7 @@ class Form
   end
 
   def clean_currency_format(text)
-    text.gsub(/[\$,]/, '').to_f
+    text.gsub(/[^0-9.]/, '').to_f
   end
 
   def verify_current_url(partial_url)

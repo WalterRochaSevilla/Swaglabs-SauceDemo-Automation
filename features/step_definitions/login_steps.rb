@@ -6,6 +6,10 @@ Given('I am on the Sauce Demo Login Page') do
   login_page.visit_page
 end
 
+Given('I navigate to the Sauce Demo Login Page') do
+  login_page.visit_page
+end
+
 When('I attempt to login with user {string} and password {string}') do |user, password|
   login_page.login_as(user, password)
 end
