@@ -6,7 +6,7 @@ Feature: Module B - Shopping Cart Management
   Background:
     Given I am logged in as "standard_user" on the Inventory Page
 
-  # ========== SCENARIOS PARA AGREGAR ITEMS ==========
+  #  SCENARIOS PARA AGREGAR ITEMS 
   @smoke @cart @positive
   Scenario: Add a single item to the cart
     When I add the item "Sauce Labs Backpack" to the cart
@@ -54,7 +54,7 @@ Feature: Module B - Shopping Cart Management
       | Test.allTheThings() T-Shirt (Red)       |
     Then the cart icon should show 6 items
 
-  # ========== SCENARIOS PARA REMOVER ITEMS ==========
+  # SCENARIOS PARA REMOVER ITEMS 
   @cart @positive @remove
   Scenario: Add and then remove a single item from cart
     When I add the item "Sauce Labs Backpack" to the cart
