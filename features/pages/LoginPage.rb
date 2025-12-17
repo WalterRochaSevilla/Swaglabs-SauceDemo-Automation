@@ -53,4 +53,9 @@ class LoginPage < Form
     end
   end
 
+  def verify_generic_login_error
+    error_msg = find('[data-test="error"]').text
+    expect(error_msg).to include('Username and password do not match')
+  end
+
 end

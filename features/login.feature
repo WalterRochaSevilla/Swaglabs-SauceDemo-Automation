@@ -35,3 +35,8 @@ Feature: Module A - User Authentication
     Given I attempt to login with user "standard_user" and password "secret_sauce"
     When I log out from the application
     Then I should be returned to the Login Page
+
+  @smoke @login @negative
+  Scenario: Validation for invalid credentials
+    When I attempt to login with user "standard_user" and password "wrong_password"
+    Then I should see an invalid credentials error

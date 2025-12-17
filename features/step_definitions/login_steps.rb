@@ -37,3 +37,7 @@ end
 Then('I should see {string} product images') do |state|
   login_page.verify_product_images_state(state)
 end
+
+Then('I should see an invalid credentials error') do
+  login_page.verify_generic_login_error
+end
