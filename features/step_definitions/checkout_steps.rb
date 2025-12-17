@@ -44,10 +44,13 @@ When('I continue to the checkout overview') do
 end
 
 Then('I should see the checkout overview page') do
-  expect(page).to have_current_path('/checkout-step-two.html', url: true)
+  expect(page).to have_current_path('/checkout-step-two.html')
   expect(page).to have_content('Checkout: Overview')
   puts "Successfully on the checkout overview page"
 end
+
+
+
 
 Then('the total price should be correctly calculated based on subtotal and tax') do
   checkout_page.validate_financials(0.08) # Assuming 8% tax rate as per your requirements
@@ -59,7 +62,7 @@ When('I finish the purchase') do
 end
 
 Then('I should see the order confirmation page') do
-  expect(page).to have_current_path('/checkout-complete.html', url: true)
+  expect(page).to have_current_path('/checkout-complete.html')
   expect(page).to have_content('Thank you for your order!')
   puts "Successfully on the order confirmation page"
 end

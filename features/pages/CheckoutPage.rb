@@ -9,21 +9,25 @@ class CheckoutPage < Form
   TAX_LABEL = '.summary_tax_label'
   TOTAL_LABEL = '.summary_total_label'
 
-def fill_checkout_information(first_name, last_name, postal_code)
-  # Esperar a que los campos estén presentes
-  expect(page).to have_selector(FIRST_NAME_FIELD, wait: 10)
-  expect(page).to have_selector(LAST_NAME_FIELD, wait: 10)
-  expect(page).to have_selector(POSTAL_CODE_FIELD, wait: 10)
-  
-  fill_in FIRST_NAME_FIELD, with: first_name
-  fill_in LAST_NAME_FIELD, with: last_name
-  fill_in POSTAL_CODE_FIELD, with: postal_code
-  click_button CONTINUE_BUTTON
-end
+  def fill_checkout_information(first_name, last_name, postal_code)
+    expect(page).to have_selector(FIRST_NAME_FIELD, wait: 10)
+
+    find(FIRST_NAME_FIELD).set(first_name)
+    find(LAST_NAME_FIELD).set(last_name)
+    find(POSTAL_CODE_FIELD).set(postal_code)
+
+    find(CONTINUE_BUTTON).click
+  end
+
+
+    # Limpieza directa del texto del subtotal, tax y total
+  def clean_currency_format(text)
+    text.gsub(/[^\d\.]/, '').to_f
+  end
 
   def validate_financials(tax_rate)
     # Verificar que estamos en la página de overview
-    expect(page).to have_current_path('/checkout-step-two.html', wait: 10)
+    expect(page).to have_current_path(/checkout-step-two\.html/)
     
     subtotal_text = find(SUBTOTAL_LABEL).text
     subtotal_from_ui = clean_currency_format(subtotal_text)
@@ -40,6 +44,30 @@ end
 
     expect(tax_from_ui).to be_within(0.01).of(expected_tax)
     expect(total_from_ui).to be_within(0.01).of(expected_total)
+  end
+
+  def validate_financials(tax_rate)
+    # Verificar que estamos en la página de overview
+    expect(page).to have_current_path(/checkout-step-two\.html/)
+
+    subtotal_text = find(SUBTOTAL_LABEL).text
+    subtotal = clean_currency_format(subtotal_text)
+    puts "DEBUG Subtotal: #{subtotal}"
+    expect(subtotal).to be > 0, "Subtotal should be greater than zero."
+
+    tax_text = find(TAX_LABEL).text
+    tax = clean_currency_format(tax_text)
+    puts "DEBUG Tax: #{tax}"
+
+    total_text = find(TOTAL_LABEL).text
+    total = clean_currency_format(total_text)
+    puts "DEBUG Total: #{total}"
+
+    expected_tax = (subtotal * tax_rate).round(2)
+    expected_total = (subtotal + expected_tax).round(2)
+
+    expect(tax).to be_within(0.01).of(expected_tax)
+    expect(total).to be_within(0.01).of(expected_total)
   end
 
   def finish_purchase
