@@ -1,0 +1,48 @@
+class CheckoutPage < Form
+  FIRST_NAME_FIELD = '#first-name'
+  LAST_NAME_FIELD = '#last-name'
+  POSTAL_CODE_FIELD = '#postal-code'
+  CONTINUE_BUTTON = '#continue'
+  FINISH_BUTTON = '#finish'
+
+  SUBTOTAL_LABEL = '.summary_subtotal_label'
+  TAX_LABEL = '.summary_tax_label'
+  TOTAL_LABEL = '.summary_total_label'
+
+def fill_checkout_information(first_name, last_name, postal_code)
+  # Esperar a que los campos estén presentes
+  expect(page).to have_selector(FIRST_NAME_FIELD, wait: 10)
+  expect(page).to have_selector(LAST_NAME_FIELD, wait: 10)
+  expect(page).to have_selector(POSTAL_CODE_FIELD, wait: 10)
+  
+  fill_in FIRST_NAME_FIELD, with: first_name
+  fill_in LAST_NAME_FIELD, with: last_name
+  fill_in POSTAL_CODE_FIELD, with: postal_code
+  click_button CONTINUE_BUTTON
+end
+
+  def validate_financials(tax_rate)
+    # Verificar que estamos en la página de overview
+    expect(page).to have_current_path('/checkout-step-two.html', wait: 10)
+    
+    subtotal_text = find(SUBTOTAL_LABEL).text
+    subtotal_from_ui = clean_currency_format(subtotal_text)
+    expect(subtotal_from_ui).to be > 0, "Subtotal should be greater than zero."
+
+    expected_tax = (subtotal_from_ui * tax_rate).round(2)
+    expected_total = (subtotal_from_ui + expected_tax).round(2)
+
+    tax_text = find(TAX_LABEL).text
+    tax_from_ui = clean_currency_format(tax_text)
+
+    total_text = find(TOTAL_LABEL).text
+    total_from_ui = clean_currency_format(total_text)
+
+    expect(tax_from_ui).to be_within(0.01).of(expected_tax)
+    expect(total_from_ui).to be_within(0.01).of(expected_total)
+  end
+
+  def finish_purchase
+    find(FINISH_BUTTON).click
+  end
+end
